@@ -1,0 +1,54 @@
+version: "3"
+
+services:
+  zookeeper:
+    image: wurstmeister/zookeeper:latest
+    ports:
+      - "2181:2181"
+  kafka:
+    image: wurstmeister/kafka:2.11-1.1.1
+    ports:
+      - "9092:9092"
+    links:
+      - zookeeper
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: ${HOST_IP}
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
+      KAFKA_DELETE_TOPIC_ENABLE: 'true'
+      KAFKA_CREATE_TOPICS: "topic-test:1:1"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+  postgres:
+    container_name: postgres_db
+    image: postgres:13.1
+    restart: always
+    #environment:
+    #  - POSTGRES_USER=root
+    #  - POSTGRES_PASSWORD=root
+    #env_file: ./env/postgres.env
+    env_file:
+      - ./env/dbs/postgres.env
+    ports:
+      - 5432:5432
+    volumes:
+      # - postgres_volume:/var/lib/postgresql
+      - ./dbs/postgres/init.sql:/docker-entrypoint-initdb.d/docker_postgres_init.sql
+
+  adminer:
+    container_name: adminer_dashboard
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+  nest:
+    container_name: nest_app
+    depends_on:
+      - postgres
+    build: .
+    volumes:
+      - .:/nest
+    ports:
+      - 3000:3000
+      - 9229:9229
+    tty: true
