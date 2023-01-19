@@ -6,6 +6,8 @@ Docker template for building modern webservices with Nest.js framework.
 
 <ul>
     <li>Dockerization with VSCode debugging</li>
+    <li>Kafkajs example</li>
+    <li>Dockerized Kafka setup for local environment</li>
     <li>TypeORM integration</li>
     <li>TypeScript oriented</li>
     <li>Unit testing with Jest test runner</li>
