@@ -6,7 +6,6 @@ import { GetProjectDetailQueryRequest } from "./cqrs/queries/requests/get-projec
 import { ProjectDetailItemDto } from "./dtos/project-detail-item.dto";
 import { Kafka, logLevel } from 'kafkajs';
 
-
 /**
  * @class ProjectDetailController ProjectDetail API for project-detail data management.
  * @author Patrik Duch
@@ -43,7 +42,6 @@ export class ProjectDetailController {
 
     await producer.disconnect()
 
-
     const consumer = this.kafka.consumer({ groupId: 'test-group' })
     await consumer.connect()
     await consumer.subscribe({ topic: 'test-topic', fromBeginning: true })
@@ -57,8 +55,6 @@ export class ProjectDetailController {
         })
       },
     })
-
-
 
     return await this.queryBus.execute(new GetProjectDetailQueryRequest());
   }
