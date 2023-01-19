@@ -1,4 +1,4 @@
-# Nest.js Docker Template
+# KafkaJs template
 
 Docker template for building modern webservices with Nest.js framework.
 
