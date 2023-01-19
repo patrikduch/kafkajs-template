@@ -1,6 +1,6 @@
 # KafkaJs template
 
-Docker template for building modern webservices with Nest.js framework.
+Example of KafkaJs library for communication with Kafka Message Broker
 
 ## Main features
 
